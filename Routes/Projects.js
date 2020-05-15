@@ -11,14 +11,15 @@ router.get('/', (req, res) => {
         });
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
     return db.getProjectByID(req.params.id)
-        .then(project => {
-            return project ? res.status(200).json(project) : res.status(404).json({ message: `Project not found.` });
+        .then(resp => {
+            return res.status(200).json(resp);
         })
-        .catch(error => {
-            return res.status(500).json(error);
-        })
+        .catch(err => {
+            console.log(err);
+            return res.status(500).json(err);
+    })
 });
 
 router.post('/', (req, res) => {
